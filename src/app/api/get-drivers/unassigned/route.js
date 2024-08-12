@@ -1,12 +1,25 @@
 import prisma from "@/lib/prisma";
 
 export async function GET(request) {
+    const { searchParams } = new URL(request.url);
+    const startTime = new Date(searchParams.get('startTime'));
+    const endTime = new Date(searchParams.get('endTime'));
+
     try {
         // Fetch unassigned drivers from the database
         const unassignedDrivers = await prisma.driver.findMany({
             where: {
-                vehicleId: null, // Assuming `vehicleId` is null for unassigned drivers
-            },
+                assignments: {
+                    none: {
+                        OR: [
+                            {
+                                startTime: { lte: endTime },
+                                endTime: { gte: startTime }
+                            }
+                        ]
+                    }
+                }
+            }
         });
 
         // Return the unassigned drivers as a JSON response

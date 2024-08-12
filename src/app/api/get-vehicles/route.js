@@ -1,17 +1,39 @@
+import { NextResponse } from 'next/server';
 import prisma from "@/lib/prisma";
 
-
 export async function GET(request) {
-    try {
-        // Fetch all drivers from the database
-        const vehicles = await prisma.vehicle.findMany();
-        
-        // Return the vehicles as a JSON response
-        return new Response(JSON.stringify(vehicles), {
-            headers: { 'Content-Type': 'application/json' },
+    const { searchParams } = new URL(request.url);
+    const startTime = searchParams.get('startTime');
+    const endTime = searchParams.get('endTime');
+
+    let vehicles;
+
+    if (startTime && endTime) {
+        vehicles = await prisma.vehicle.findMany({
+            where: {
+                OR: [
+                    {
+                        assignments: {
+                            none: {
+                                startTime: { lte: new Date(endTime) },
+                                endTime: { gte: new Date(startTime) }
+                            }
+                        }
+                    },
+                    {
+                        assignments: {
+                            some: {
+                                startTime: { gt: new Date(endTime) },
+                                endTime: { lt: new Date(startTime) }
+                            }
+                        }
+                    }
+                ]
+            }
         });
-    } catch (error) {
-        console.error(error);
-        return new Response('Internal Server Error', { status: 500 });
+    } else {
+        vehicles = await prisma.vehicle.findMany();
     }
+
+    return NextResponse.json(vehicles);
 }

@@ -10,20 +10,32 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
+model Assignment {
+  id        Int      @id @default(autoincrement())
+  driverId  Int
+  vehicleId Int
+  startTime DateTime
+  endTime   DateTime
+
+  driver    Driver   @relation(fields: [driverId], references: [id])
+  vehicle   Vehicle  @relation(fields: [vehicleId], references: [id])
+
+  @@unique([driverId, startTime, endTime])
+  @@unique([vehicleId, startTime, endTime])
+}
+
 model Driver {
-  id       String   @id @default(cuid())
-  name     String
-  email    String?
-  phone    String
-  location String?
-  vehicle  Vehicle?
-  vehicleId String? @unique
+  id        Int          @id @default(autoincrement())
+  name      String
+  email     String
+  phone     String
+  location  String
+  assignments Assignment[]
 }
 
 model Vehicle {
-  id       String  @id @default(cuid())
-  model    String
-  license  String
-  driver   Driver? @relation(fields: [driverId], references: [id])
-  driverId String? @unique
+  id        Int          @id @default(autoincrement())
+  model     String
+  license   String
+  assignments Assignment[]
 }
