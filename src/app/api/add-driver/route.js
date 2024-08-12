@@ -12,5 +12,5 @@ export async function POST(request){
             location
         }
     })
-    return NextResponse.json({data:res})
+    return NextResponse.json({result})
 }
