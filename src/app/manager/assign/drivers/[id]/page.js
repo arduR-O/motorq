@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 const AssignDriver = ({ params }) => {
     const vehicleId = params.id;
     const [drivers, setDrivers] = useState([]);
+    const [selectedDrivers, setSelectedDrivers] = useState([]);
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
     const router = useRouter();
@@ -19,10 +20,19 @@ const AssignDriver = ({ params }) => {
         }
     };
 
-    const handleAssign = async (driverId) => {
+    const handleDriverSelection = (driverId) => {
+        setSelectedDrivers((prevSelectedDrivers) => {
+            if (prevSelectedDrivers.includes(driverId)) {
+                return prevSelectedDrivers.filter((id) => id !== driverId);
+            } else {
+                return [...prevSelectedDrivers, driverId];
+            }
+        });
+    };
+
+    const handleRequest = async (driverId) => {
         try {
-            // Assign driver to vehicle
-            const response = await fetch(`/api/assign-driver`, {
+            const response = await fetch(`/api/request-driver`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ driverId, vehicleId, startTime, endTime }),
@@ -35,7 +45,26 @@ const AssignDriver = ({ params }) => {
                 alert(data.error);
             }
         } catch (error) {
-            console.error("Error assigning driver:", error);
+            console.error("Error requesting driver assignment:", error);
+        }
+    };
+
+    const handleMassRequest = async () => {
+        try {
+            const response = await fetch(`/api/request-drivers`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ driverIds: selectedDrivers, vehicleId, startTime, endTime }),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                router.push('/manager/assign');
+            } else {
+                alert(data.error);
+            }
+        } catch (error) {
+            console.error("Error requesting driver assignments:", error);
         }
     };
 
@@ -44,7 +73,7 @@ const AssignDriver = ({ params }) => {
             fetchUnassignedDrivers();
         }
     }, [startTime, endTime]);
-    
+
     return (
         <div className="text-white">
             <input
@@ -64,10 +93,16 @@ const AssignDriver = ({ params }) => {
             />
             {startTime && endTime && drivers.map((driver) => (
                 <div key={driver.id} className="flex gap-3">
+                    <input
+                        type="checkbox"
+                        checked={selectedDrivers.includes(driver.id)}
+                        onChange={() => handleDriverSelection(driver.id)}
+                    />
                     <p>{driver.name}</p>
-                    <button onClick={() => handleAssign(driver.id)}>Assign</button>
+                    <button onClick={() => handleRequest(driver.id)}>Request Assignment</button>
                 </div>
             ))}
+            <button onClick={handleMassRequest}>Request Selected Drivers</button>
         </div>
     );
 }
