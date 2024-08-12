@@ -30,7 +30,7 @@ const AssignDriver = ({ params }) => {
 
             const data = await response.json();
             if (response.ok) {
-                router.push('/assign');
+                router.push('/manager/assign');
             } else {
                 alert(data.error);
             }

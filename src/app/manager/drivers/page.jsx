@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect } from 'react';
-import prisma from "@/lib/prisma";
+import Link from 'next/link';
 
 const Drivers = () => {
     const [drivers, setDrivers] = useState([]);
@@ -42,9 +42,10 @@ const Drivers = () => {
             />
             <ul>
                 {filteredDrivers.map(driver => (
-                    <li key={driver.id}>
-                        {driver.name} - {driver.phone}
-                    </li>
+                    <div key={driver.id}>
+                        <div>{driver.name} - {driver.phone}</div>
+                        <Link href={`/manager/drivers/details/${encodeURIComponent(driver.id)}`}><button>details</button></Link>
+                    </div>
                 ))}
             </ul>
         </div>

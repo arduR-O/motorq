@@ -67,7 +67,7 @@ const Page = () => {
                                         Unassign
                                     </button>
                                 ) : (
-                                    <Link href={`/assign/drivers/${encodeURIComponent(vehicle.id)}`}>
+                                    <Link href={`/manager/assign/drivers/${encodeURIComponent(vehicle.id)}`}>
                                         <button>Assign</button>
                                     </Link>
                                 )}
