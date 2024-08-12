@@ -1,5 +1,6 @@
 "use client"
 import { useState } from "react";
+import { PrismaClient } from "@prisma/client";
 
 const Create = () => {
   const [driverId, setDriverId] = useState("");
@@ -28,11 +29,26 @@ const Create = () => {
     setLocation(e.target.value);
   };
 
+  
+  const prisma = new PrismaClient();
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try{
+      fetch("/api/add-driver", {method:'POST', headers:{
+        'Content-Type':'application/json'
+      }, 
+      body:JSON.stringify({driverId, name, driverEmail, driverPhone, location})})
+      }catch(error){
+        console.error("Error creating data:", error);
+      }
+    };
+
   return (
 
     <main className="h-screen w-screen flex justify-center items-center">
     <div>
-        <form className="flex flex-col gap-6">
+        <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-2">
                 <label htmlFor="driverId">Driver ID:</label>
                 <input
