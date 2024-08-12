@@ -28,12 +28,20 @@ const Create = () => {
   const handleLocationChange = (e) => {
     setLocation(e.target.value);
   };
-
   
-  const prisma = new PrismaClient();
+  const [isLoading, setIsLoading] = useState(false);
 
+  const handleFormReset = () => {
+    setDriverId("");
+    setName("");
+    setDriverEmail("");
+    setDriverPhone("");
+    setLocation("");
+  };
   async function handleSubmit(e) {
+    
     e.preventDefault();
+    setIsLoading(true);
     try{
       fetch("/api/add-driver", {method:'POST', headers:{
         'Content-Type':'application/json'
@@ -42,6 +50,8 @@ const Create = () => {
       }catch(error){
         console.error("Error creating data:", error);
       }
+      handleFormReset();
+      setIsLoading(false);
     };
 
   return (
@@ -116,8 +126,16 @@ const Create = () => {
             <button
                 type="submit"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                disasbled={isLoading}
             >
-                Submit
+                {isLoading ? (
+                    <div className="flex items-center justify-center">
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                      Creating...
+                    </div>
+                  ) : (
+                    'Submit'
+                  )}
             </button>
         </form>
     </div>

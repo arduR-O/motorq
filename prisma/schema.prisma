@@ -5,14 +5,13 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
-
 model Driver {
-  id       String  @id @default(cuid())
+  id       String   @id @default(cuid())
   name     String
   email    String?
   phone    String
@@ -21,9 +20,9 @@ model Driver {
 }
 
 model Vehicle {
-  id            String  @id @default(cuid())
-  makeAndModel  String
-  licensePlate  String
-  driver        Driver?  @relation(fields: [driverId], references: [id])
-  driverId      String?  @unique
+  id       String  @id @default(cuid())
+  model    String
+  license  String
+  driver   Driver? @relation(fields: [driverId], references: [id])
+  driverId String? @unique
 }
