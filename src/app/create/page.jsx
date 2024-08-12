@@ -39,20 +39,37 @@ const Create = () => {
     setLocation("");
   };
   async function handleSubmit(e) {
-    
     e.preventDefault();
     setIsLoading(true);
-    try{
-      fetch("/api/add-driver", {method:'POST', headers:{
-        'Content-Type':'application/json'
-      }, 
-      body:JSON.stringify({driverId, name, driverEmail, driverPhone, location})})
-      }catch(error){
-        console.error("Error creating data:", error);
+    // setError("");
+  
+    try {
+      const response = await fetch("/api/add-driver", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ driverId, name, driverEmail, driverPhone, location })
+      });
+  
+      if (!response.ok) {
+        alert("duplicate user id");
+        const errorData = await response.json();
+        console.error(errorData);
+        // throw new Error(errorData.message || "Failed to add driver");
       }
+  
+      // If successful, reset the form
       handleFormReset();
+      // You can add a success message here if you want
+      // setSuccessMessage("Driver added successfully!");
+    } catch (error) {
+      console.error("Error creating data:", error);
+      // setError(error.message || "An error occurred while adding the driver");
+    } finally {
       setIsLoading(false);
-    };
+    }
+  }
 
   return (
 
@@ -126,7 +143,7 @@ const Create = () => {
             <button
                 type="submit"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                disasbled={isLoading}
+                disabled={isLoading}
             >
                 {isLoading ? (
                     <div className="flex items-center justify-center">

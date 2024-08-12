@@ -18,17 +18,8 @@ export async function POST(request){
         return NextResponse.json({result});
     } catch (error) {
         // Handle the error here
+        // console.log("Error creating data:", error);
         console.error(error);
         return NextResponse.error();
     }
-    // const result = await prisma.post.create({
-    //     data:{
-    //         id,
-    //         name,
-    //         email,
-    //         phone,
-    //         location
-    //     }
-    // })
-    // return NextResponse.json({result})
 }

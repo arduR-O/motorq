@@ -17,6 +17,7 @@ model Driver {
   phone    String
   location String?
   vehicle  Vehicle?
+  vehicleId String? @unique
 }
 
 model Vehicle {
