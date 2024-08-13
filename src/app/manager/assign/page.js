@@ -1,7 +1,8 @@
 "use client";
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-
+import Header from '@/components/header';
+import {motion} from "framer-motion";
 const Page = () => {
     const [vehicles, setVehicles] = useState([]);
     const [startTime, setStartTime] = useState('');
@@ -36,45 +37,71 @@ const Page = () => {
     };
 
     return (
-        <div className="text-white">
+        <div className="p-4 flex flex-col gap-4 items-center">
+            <Header content="Assign Drivers"/>
+            <div className='flex gap-4'>
             <input
                 type="datetime-local"
                 value={startTime}
                 onChange={(e) => setStartTime(e.target.value)}
                 placeholder="Start Time"
-                className="text-black"
-            />
+                className='text-black mb-4 p-2 border rounded self-start'
+                />
             <input
                 type="datetime-local"
                 value={endTime}
                 onChange={(e) => setEndTime(e.target.value)}
                 placeholder="End Time"
-                className="text-black"
+                className='text-black mb-4 p-2 border rounded self-start'
                 min={startTime}
-            />
-            <button onClick={handleFilter}>Filter</button>
-            <div>
-                {filteredVehicles.length > 0 && (
-                    <div>
-                        <h2 className="text-2xl">Vehicles</h2>
-                        {filteredVehicles.map((vehicle) => (
-                            <div key={vehicle.id} className="flex gap-3">
-                                <p>
-                                    {vehicle.model} - {vehicle.license}
-                                </p>
-                                {vehicle.driverId ? (
-                                    <button onClick={() => handleUnassign(vehicle.id)} disabled={isLoading}>
-                                        Unassign
-                                    </button>
-                                ) : (
+                />
+                </div>
+            <motion.button
+                className={`text-grey text-xl rounded-full border-2 border-grey w-56 py-3  hover:bg-[#de4c2c] hover:border-4 hover:text-black hover:font-bold bg-[#0d0d0d] hover:border-[#de4c2c] self-center`}
+                whileTap={{ scale: 0.9 }}
+                whileHover={{ scale: 1.1 }}
+          >Filter</motion.button>
+            <div className="relative overflow-x-auto shadow-md sm:rounded-lg self-start w-full">
+                <table className="w-full text-left border-collapse">
+                    <thead>
+                        <tr className="bg-gray-200">
+                            <th scope="col" className="p-3 font-bold uppercase text-gray-600 border-b">
+                                Vehicle ID
+                            </th>
+                            <th scope="col" className="p-3 font-bold uppercase text-gray-600 border-b">
+                                Model
+                            </th>
+                            <th scope="col" className="p-3 font-bold uppercase text-gray-600 border-b">
+                                License
+                            </th>
+                            <th scope="col" className="p-3 font-bold uppercase text-gray-600 border-b">
+                                <span className="sr-only">Assign</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filteredVehicles.map(vehicle => (
+                            <tr key={vehicle.id} className="bg-black hover:bg-orange">
+                                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {vehicle.id}
+                                </th>
+                                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {vehicle.model}
+                                </th>
+                                <td className="px-6 py-4">
+                                    {vehicle.license}
+                                </td>
+                                <td className="px-6 py-4 text-right">
                                     <Link href={`/manager/assign/drivers/${encodeURIComponent(vehicle.id)}`}>
-                                        <button>Assign</button>
+                                        <span className="font-medium text-blue-600 dark:text-blue-500 hover:text-black cursor-pointer">
+                                            Details
+                                        </span>
                                     </Link>
-                                )}
-                            </div>
+                                </td>
+                            </tr>
                         ))}
-                    </div>
-                )}
+                    </tbody>
+                </table>
             </div>
         </div>
     );

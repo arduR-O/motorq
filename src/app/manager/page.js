@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation"; // Import the useRouter hook
 import Image from "next/image";
 import { animate, motion } from "framer-motion";
+import Header from "@/components/header";
 
 export default function Home() {
   const [username, setUsername] = useState("");
@@ -32,6 +33,9 @@ export default function Home() {
  
   return (
     <main className="min-h-screen min-w-screen flex flex-col justify-center items-center gap-2">
+      <div className="flex flex-col items-center gap-5">
+      <Header content={"Manager Login"} />
+      </div>
       <div
         className={`flex items-center p-4 mb-4 text-sm text-orange rounded-lg bg-yellow-50 dark:bg-black dark:text-grey border-2 border-orange`}
         role="alert"
