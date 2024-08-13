@@ -68,8 +68,8 @@ const RequestsContent = () => {
                                 <td className="p-3 border-b">{request.vehicleId}</td>
                                 <td className="p-3 border-b">{new Date(request.startTime).toLocaleString()}</td>
                                 <td className="p-3 border-b">{new Date(request.endTime).toLocaleString()}</td>
-                                <td className="p-3 border-b">{<div><button onClick={() => handleRequestAction(request.id, 'APPROVED')}>✔️</button>
-                                <button onClick={() => handleRequestAction(request.id, 'REJECTED')}>❌</button></div>}</td>
+                                <td className="p-3 border-b">{<div className="flex gap-4"><button className="bg-black p-2" onClick={() => handleRequestAction(request.id, 'APPROVED')}>✔️</button>
+                                <button className="bg-black p-2" onClick={() => handleRequestAction(request.id, 'REJECTED')}>❌</button></div>}</td>
                             </tr>
                         ))}
                     </tbody>
