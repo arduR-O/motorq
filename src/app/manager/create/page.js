@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import MapSelector from "@/components/MapSelector";
+import { motion } from "framer-motion";
 const Create = () => {
   const [driverId, setDriverId] = useState("");
   const [name, setName] = useState("");
@@ -58,13 +59,13 @@ const Create = () => {
   };
 
   return (
-    <main className="min-h-screen w-screen flex justify-center items-center">
-      <div>
-        <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="driverId">Driver ID:</label>
+    <main className="min-h-screen min-w-screen flex flex-col justify-center items-center gap-2">
+      <div className="flex flex-col h-[55vh] w-[25vw] justify-evenly border-4 border-grey rounded-3xl items-center">
+        <form className="flex flex-col items-center gap-4 justify-evenly h-full w-full" onSubmit={handleSubmit}>
+          <div>
+            <label className="ml-1 mr-auto text-left uppercase text-[16px] md:text-[12px] mx-[13%] md:mx-[10%] text-[#B7AB98] mt-2 mb-3 tracking-[7px]" htmlFor="driverId">Driver ID:</label>
             <input
-              className="text-black"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               type="text"
               id="driverId"
               name="driverId"
@@ -73,10 +74,10 @@ const Create = () => {
               onChange={handleDriverIdChange}
             />
           </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="name">Name:</label>
+          <div>
+            <label className="ml-1 mr-auto text-left uppercase text-[16px] md:text-[12px] mx-[13%] md:mx-[10%] text-[#B7AB98] mt-2 mb-3 tracking-[7px]" htmlFor="name">Name:</label>
             <input
-              className="text-black"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               type="text"
               id="name"
               name="name"
@@ -85,10 +86,10 @@ const Create = () => {
               onChange={handleNameChange}
             />
           </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="driverEmail">Driver Email:</label>
+          <div>
+            <label className="ml-1 mr-auto text-left uppercase text-[16px] md:text-[12px] mx-[13%] md:mx-[10%] text-[#B7AB98] mt-2 mb-3 tracking-[7px]" htmlFor="driverEmail">Driver Email:</label>
             <input
-              className="text-black"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               type="email"
               id="driverEmail"
               name="driverEmail"
@@ -97,10 +98,10 @@ const Create = () => {
               onChange={handleDriverEmailChange}
             />
           </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="driverPhone">Driver Phone:</label>
+          <div>
+            <label className="ml-1 mr-auto text-left uppercase text-[16px] md:text-[12px] mx-[13%] md:mx-[10%] text-[#B7AB98] mt-2 mb-3 tracking-[7px]" htmlFor="driverPhone">Driver Phone:</label>
             <input
-              className="text-black"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               type="tel"
               id="driverPhone"
               name="driverPhone"
@@ -109,8 +110,8 @@ const Create = () => {
               onChange={handleDriverPhoneChange}
             />
           </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="location">Location</label>
+          <div>
+            <label className="ml-1 mr-auto text-left uppercase text-[16px] md:text-[12px] mx-[13%] md:mx-[10%] text-[#B7AB98] mt-2 mb-3 tracking-[7px]" htmlFor="location">Location</label>
             <MapSelector onLocationSelect={setSelectedLocation} />
             {selectedLocation && (
               <p>
@@ -119,7 +120,13 @@ const Create = () => {
               </p>
             )}
           </div>
-          <button type="submit" disabled={isLoading}>
+          <motion.button
+              className={`text-grey text-xl rounded-full border-2 border-grey w-56 py-3 hover:bg-[#de4c2c] hover:border-4 hover:text-black hover:font-bold bg-[#0d0d0d] hover:border-[#de4c2c] m-auto`}
+              whileTap={{ scale: 0.9 }}
+              whileHover={{ scale: 1.1 }}
+              type="submit"
+              disabled={isLoading}
+            >
             {isLoading ? (
               <div className="flex items-center justify-center">
                 <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
@@ -128,7 +135,7 @@ const Create = () => {
             ) : (
               "Add Driver"
             )}
-          </button>
+          </motion.button>
         </form>
       </div>
     </main>

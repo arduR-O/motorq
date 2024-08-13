@@ -1,17 +1,19 @@
+"use client"
 import Link from "next/link";
+import OrgButton from "@/components/OrgButton";
 const Home = () => {
     return ( 
 
-        <main className="h-screen w-screen flex justify-center items-center">
-        <div className="flex flex-col gap-6">
+        <main className="min-h-screen min-w-screen flex flex-col justify-center items-center gap-2">
+        <div className="flex flex-col h-[55vh] w-[25vw] justify-evenly border-4 border-grey rounded-3xl items-center">
             <Link href="/manager/create">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create</button>
+            <OrgButton content="Add Driver" />
             </Link>
             <Link href="/manager/drivers">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Drivers</button>
+            <OrgButton content="View Drivers" />
             </Link>
             <Link href="/manager/assign">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Assign Drivers</button>
+            <OrgButton content="Assign Driver" />
             </Link>
         </div>
         </main>
