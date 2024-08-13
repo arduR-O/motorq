@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Header from '@/components/header';
+import Header from '@/components/Header';
 
 const DriverDetails = ({ params }) => {
     const router = useRouter();

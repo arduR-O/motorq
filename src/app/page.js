@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import OrgButton from "@/components/OrgButton";
-import Header from "@/components/header";
+import Header from "@/components/Header";
 
 const Page = () => {
   return (

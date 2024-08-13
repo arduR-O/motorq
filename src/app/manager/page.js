@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation"; // Import the useRouter hook
 import Image from "next/image";
 import { animate, motion } from "framer-motion";
-import Header from "@/components/header";
+import Header from "@/components/Header";
 
 export default function Home() {
   const [username, setUsername] = useState("");

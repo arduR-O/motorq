@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link";
 import OrgButton from "@/components/OrgButton";
-import Header from "@/components/header";
+import Header from "@/components/Header";
 const Home = () => {
     return ( 
 

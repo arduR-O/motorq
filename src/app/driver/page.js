@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Header from "@/components/header";
+import Header from "@/components/Header";
 import { useRouter } from "next/navigation";
 import { animate, motion } from "framer-motion";
 

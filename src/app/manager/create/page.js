@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import MapSelector from "@/components/MapSelector";
-import Header from "@/components/header";
+import Header from "@/components/Header";
 import { motion } from "framer-motion";
 const Create = () => {
   const [driverId, setDriverId] = useState("");
