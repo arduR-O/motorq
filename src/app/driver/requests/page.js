@@ -1,8 +1,10 @@
 "use client"
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-const Requests = () => {
+
+const RequestsContent = () => {
     const [requests, setRequests] = useState([]);
     const searchParams = useSearchParams();
     const driverId = searchParams.get("driverId");
@@ -56,5 +58,9 @@ const Requests = () => {
         </div>
     );
 }
-
+const Requests = () => (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RequestsContent />
+    </Suspense>
+  );
 export default Requests;

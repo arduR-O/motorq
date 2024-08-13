@@ -1,8 +1,11 @@
-"use client";
+"use client"
 import { useEffect, useState } from "react";
-import MapSelector from "@/components/MapSelector";
 import Header from "@/components/Header";
 import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
+const MapSelector = dynamic(() => import("@/components/MapSelector"), {
+  ssr: false,
+});
 const Create = () => {
   const [driverId, setDriverId] = useState("");
   const [name, setName] = useState("");
