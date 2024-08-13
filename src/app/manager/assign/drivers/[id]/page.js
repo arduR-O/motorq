@@ -1,6 +1,7 @@
 "use client"
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import MapSelector from "@/components/MapSelector";
 
 const AssignDriver = ({ params }) => {
     const vehicleId = params.id;
@@ -8,6 +9,11 @@ const AssignDriver = ({ params }) => {
     const [selectedDrivers, setSelectedDrivers] = useState([]);
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
+    const [isMapVisible, setIsMapVisible] = useState(false);
+    const [selectedLocation, setSelectedLocation] = useState(null);
+    const [searchRadius, setSearchRadius] = useState("");
+    const [filteredDrivers, setFilteredDrivers] = useState([]);
+
     const router = useRouter();
 
     const fetchUnassignedDrivers = async () => {
@@ -15,6 +21,7 @@ const AssignDriver = ({ params }) => {
             const response = await fetch(`/api/get-drivers/unassigned?startTime=${startTime}&endTime=${endTime}`);
             const data = await response.json();
             setDrivers(data);
+            setFilteredDrivers(data);
         } catch (error) {
             console.error('Error fetching unassigned drivers:', error);
         }
@@ -73,6 +80,30 @@ const AssignDriver = ({ params }) => {
             fetchUnassignedDrivers();
         }
     }, [startTime, endTime]);
+    
+    const handleFilterByLocation = () => {
+        if (selectedLocation && searchRadius) {
+            const radius = parseFloat(searchRadius);
+            const filtered = drivers.filter(driver => {
+                const distance = calculateDistance(selectedLocation, driver.location);
+                return distance <= radius;
+            });
+            setFilteredDrivers(filtered);
+        }
+    };
+
+    const calculateDistance = (location1, location2) => {
+        const R = 6371; // Radius of the Earth in km
+        location2 = JSON.parse(location2);
+        const dLat = (location2.lat - location1.lat) * (Math.PI / 180);
+        const dLng = (location2.lng - location1.lng) * (Math.PI / 180);
+        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                  Math.cos(location1.lat * (Math.PI / 180)) * Math.cos(location2.lat * (Math.PI / 180)) *
+                  Math.sin(dLng / 2) * Math.sin(dLng / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c; // Distance in km
+        console.log(distance);
+        return distance;};
 
     return (
         <div className="text-white">
@@ -91,7 +122,25 @@ const AssignDriver = ({ params }) => {
                 className="text-black"
                 min={startTime} // Set the minimum value for end time
             />
-            {startTime && endTime && drivers.map((driver) => (
+            {startTime && endTime && (
+                <button onClick={() => setIsMapVisible(!isMapVisible)}>
+                    {isMapVisible ? 'Hide Map' : 'Filter by Location'}
+                </button>
+            )}
+            {isMapVisible && (
+                <div>
+                    <MapSelector onLocationSelect={setSelectedLocation} />
+                    <input
+                        type="number"
+                        placeholder="Search Radius (km)"
+                        value={searchRadius}
+                        onChange={(e) => setSearchRadius(e.target.value)}
+                        className='text-black'
+                    />
+                    <button onClick={handleFilterByLocation}>Apply Filter</button>
+                </div>
+            )}
+            {startTime && endTime && filteredDrivers.map((driver) => (
                 <div key={driver.id} className="flex gap-3">
                     <input
                         type="checkbox"
@@ -99,7 +148,7 @@ const AssignDriver = ({ params }) => {
                         onChange={() => handleDriverSelection(driver.id)}
                     />
                     <p>{driver.name}</p>
-                    <button onClick={() => handleRequest(driver.id)}>Request Assignment</button>
+                    <button onClick={() => handleRequest(driver.id)}>Request</button>
                 </div>
             ))}
             <button onClick={handleMassRequest}>Request Selected Drivers</button>

@@ -4,10 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
-  const [username, setUsername] = useState("");
+  const [driverID, setDriverID] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleUsernameChange = (e) => setUsername(e.target.value);
+  const handleDriverIDChange = (e) => setDriverID(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
   return (
@@ -15,10 +15,10 @@ export default function Home() {
       <form className="flex flex-col items-center">
         <input
           type="text"
-          placeholder="Username"
+          placeholder="DriverID"
           className="mb-4"
-          value={username}
-          onChange={handleUsernameChange}
+          value={driverID}
+          onChange={handleDriverIDChange}
         />
         <input
           type="password"
@@ -27,11 +27,11 @@ export default function Home() {
           value={password}
           onChange={handlePasswordChange}
         />
-        <Link href="/driver/home">
+        <Link href={`/driver/home?driverId=${encodeURIComponent(driverID)}`}>
           <button
             type="submit"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            disabled={!username || !password}
+            disabled={!driverID || !password}
           >
             Submit
           </button>

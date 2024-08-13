@@ -56,6 +56,8 @@ const DriverDetails = ({ params }) => {
                     {driver.assignments.map(assignment => (
                         <tr key={assignment.id}>
                             <td>{assignment.vehicleId}</td>
+                            {/* <td>{assignment.startTime}</td>
+                            <td>{assignment.endTime}</td> */}
                             <td>{new Date(assignment.startTime).toLocaleString()}</td>
                             <td>{new Date(assignment.endTime).toLocaleString()}</td>
                         </tr>

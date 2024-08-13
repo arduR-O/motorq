@@ -1,26 +1,25 @@
-"use client"
-import { useState } from "react";
-
+"use client";
+import { useEffect, useState } from "react";
+import MapSelector from "@/components/MapSelector";
 const Create = () => {
   const [driverId, setDriverId] = useState("");
   const [name, setName] = useState("");
   const [driverEmail, setDriverEmail] = useState("");
   const [driverPhone, setDriverPhone] = useState("");
-  const [location, setLocation] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleDriverIdChange = (e) => setDriverId(e.target.value);
   const handleNameChange = (e) => setName(e.target.value);
   const handleDriverEmailChange = (e) => setDriverEmail(e.target.value);
   const handleDriverPhoneChange = (e) => setDriverPhone(e.target.value);
-  const handleLocationChange = (e) => setLocation(e.target.value);
 
   const handleFormReset = () => {
     setDriverId("");
     setName("");
     setDriverEmail("");
     setDriverPhone("");
-    setLocation("");
+    setSelectedLocation(null);
   };
 
   const handleSubmit = async (e) => {
@@ -29,11 +28,17 @@ const Create = () => {
 
     try {
       const response = await fetch("/api/add-driver", {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ driverId, name, driverEmail, driverPhone, location })
+        body: JSON.stringify({
+          driverId,
+          name,
+          driverEmail,
+          driverPhone,
+          location: JSON.stringify(selectedLocation), // Convert object to string
+        }),
       });
 
       if (!response.ok) {
@@ -53,7 +58,7 @@ const Create = () => {
   };
 
   return (
-    <main className="h-screen w-screen flex justify-center items-center">
+    <main className="min-h-screen w-screen flex justify-center items-center">
       <div>
         <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-2">
@@ -105,26 +110,24 @@ const Create = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="location">Location:</label>
-            <input
-              className="text-black"
-              type="text"
-              id="location"
-              name="location"
-              required
-              value={location}
-              onChange={handleLocationChange}
-            />
+            <label htmlFor="location">Location</label>
+            <MapSelector onLocationSelect={setSelectedLocation} />
+            {selectedLocation && (
+              <p>
+                Selected Location: {selectedLocation.lat},{" "}
+                {selectedLocation.lng}
+              </p>
+            )}
           </div>
           <button type="submit" disabled={isLoading}>
-          {isLoading ? (
-                    <div className="flex items-center justify-center">
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                      Loading...
-                    </div>
-                  ) : (
-                    'Add Driver'
-                  )}
+            {isLoading ? (
+              <div className="flex items-center justify-center">
+                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                Loading...
+              </div>
+            ) : (
+              "Add Driver"
+            )}
           </button>
         </form>
       </div>
