@@ -60,6 +60,7 @@ const Page = () => {
                 className={`text-grey text-xl rounded-full border-2 border-grey w-56 py-3  hover:bg-[#de4c2c] hover:border-4 hover:text-black hover:font-bold bg-[#0d0d0d] hover:border-[#de4c2c] self-center`}
                 whileTap={{ scale: 0.9 }}
                 whileHover={{ scale: 1.1 }}
+                onClick={handleFilter}
           >Filter</motion.button>
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg self-start w-full">
                 <table className="w-full text-left border-collapse">
