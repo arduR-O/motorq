@@ -2,6 +2,7 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import dynamic from 'next/dynamic';
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 

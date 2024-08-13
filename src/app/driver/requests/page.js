@@ -52,11 +52,14 @@ const RequestsContent = () => {
             <Header content="Manage Requests"/>
             {requests.length === 0 && <p className="m-auto uppercase text-[16px] md:text-[12px] mx-[13%] md:mx-[10%] text-[#B7AB98] mb-2 tracking-[7px]">No pending requests</p>}
             <div className="overflow-x-auto">
+
                 <table className="w-full text-left border-collapse">
                     <thead>
                         <tr className="bg-gray-200">
                             <th className="p-3 font-bold uppercase text-gray-600 border-b">Vehicle Model</th>
+                            <th className="p-3 font-bold uppercase text-gray-600 border-b">Start Date</th>
                             <th className="p-3 font-bold uppercase text-gray-600 border-b">Start Time</th>
+                            <th className="p-3 font-bold uppercase text-gray-600 border-b">End Date</th>
                             <th className="p-3 font-bold uppercase text-gray-600 border-b">End Time</th>
                             <th className="p-3 font-bold uppercase text-gray-600 border-b">Response</th>
 
@@ -66,8 +69,10 @@ const RequestsContent = () => {
                         {requests.map(request => (
                             <tr key={request.id} className="bg-black hover:bg-orange">
                                 <td className="p-3 border-b">{request.vehicleId}</td>
-                                <td className="p-3 border-b">{new Date(request.startTime).toLocaleString()}</td>
-                                <td className="p-3 border-b">{new Date(request.endTime).toLocaleString()}</td>
+                                <td className="p-3 border-b">{new Date(request.startTime).toLocaleDateString()}</td>
+                                <td className="p-3 border-b">{new Date(request.startTime).toLocaleTimeString()}</td>
+                                <td className="p-3 border-b">{new Date(request.endTime).toLocaleDateString()}</td>
+                                <td className="p-3 border-b">{new Date(request.endTime).toLocaleTimeString()}</td>
                                 <td className="p-3 border-b">{<div className="flex gap-4"><button className="bg-black p-2" onClick={() => handleRequestAction(request.id, 'APPROVED')}>✔️</button>
                                 <button className="bg-black p-2" onClick={() => handleRequestAction(request.id, 'REJECTED')}>❌</button></div>}</td>
                             </tr>
