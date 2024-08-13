@@ -76,7 +76,7 @@ const Page = () => {
                                 License
                             </th>
                             <th scope="col" className="p-3 font-bold uppercase text-gray-600 border-b">
-                                <span className="sr-only">Assign</span>
+                                <span className="sr-only">Drivers</span>
                             </th>
                         </tr>
                     </thead>
@@ -95,7 +95,7 @@ const Page = () => {
                                 <td className="px-6 py-4 text-right">
                                     <Link href={`/manager/assign/drivers/${encodeURIComponent(vehicle.id)}`}>
                                         <span className="font-medium text-blue-600 dark:text-blue-500 hover:text-black cursor-pointer">
-                                            Details
+                                            See Drivers
                                         </span>
                                     </Link>
                                 </td>
