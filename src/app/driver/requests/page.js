@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
-
+import Header from "@/components/Header";
 
 const RequestsContent = () => {
     const [requests, setRequests] = useState([]);
@@ -31,6 +31,7 @@ const RequestsContent = () => {
                 setRequests(requests.filter(request => request.id !== requestId));
             }
             const data = await response.json();
+            console.log(data);
             if (response.ok) {
                 alert("request accepted successfully")
                 setRequests(requests.filter(request => request.id !== requestId));
@@ -47,14 +48,40 @@ const RequestsContent = () => {
     }, []);
 
     return (
-        <div className="text-white">
-            {requests.map((request) => (
-                <div key={request.id} className="flex gap-3">
+        <div className="p-4 flex flex-col gap-4 items-center">
+            <Header content="Manage Requests"/>
+            {requests.length === 0 && <p className="m-auto uppercase text-[16px] md:text-[12px] mx-[13%] md:mx-[10%] text-[#B7AB98] mb-2 tracking-[7px]">No pending requests</p>}
+            <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                    <thead>
+                        <tr className="bg-gray-200">
+                            <th className="p-3 font-bold uppercase text-gray-600 border-b">Vehicle Model</th>
+                            <th className="p-3 font-bold uppercase text-gray-600 border-b">Start Time</th>
+                            <th className="p-3 font-bold uppercase text-gray-600 border-b">End Time</th>
+                            <th className="p-3 font-bold uppercase text-gray-600 border-b">Response</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {requests.map(request => (
+                            <tr key={request.id} className="bg-black hover:bg-orange">
+                                <td className="p-3 border-b">{request.vehicleId}</td>
+                                <td className="p-3 border-b">{new Date(request.startTime).toLocaleString()}</td>
+                                <td className="p-3 border-b">{new Date(request.endTime).toLocaleString()}</td>
+                                <td className="p-3 border-b">{<div><button onClick={() => handleRequestAction(request.id, 'APPROVED')}>✔️</button>
+                                <button onClick={() => handleRequestAction(request.id, 'REJECTED')}>❌</button></div>}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+            {/* {requests.map((request) => (
+                <div key={request.id} className="flex gap-3 text-white">
                     <p>{`Request for vehicle ${request.vehicle.model} from ${new Date(request.startTime).toLocaleString()} to ${new Date(request.endTime).toLocaleString()}`}</p>
                     <button onClick={() => handleRequestAction(request.id, 'APPROVED')}>✔️</button>
                     <button onClick={() => handleRequestAction(request.id, 'REJECTED')}>❌</button>
                 </div>
-            ))}
+            ))} */}
         </div>
     );
 }

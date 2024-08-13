@@ -29,18 +29,18 @@ export async function POST(request) {
             endTime: updatedRequest.endTime,
           },
         });
+        await prisma.request.updateMany({
+          where: {
+            vehicleId: updatedRequest.vehicleId,
+            startTime: updatedRequest.startTime,
+            endTime: updatedRequest.endTime,
+            status: RequestStatus.PENDING,
+          },
+          data: {
+            status: RequestStatus.REJECTED,
+          },
+        });
       }
-      await prisma.request.updateMany({
-        where: {
-          vehicleId: updatedRequest.vehicleId,
-          startTime: updatedRequest.startTime,
-          endTime: updatedRequest.endTime,
-          status: RequestStatus.PENDING,
-        },
-        data: {
-          status: RequestStatus.REJECTED,
-        },
-      });
     });
 
     return NextResponse.json({ success: true });
