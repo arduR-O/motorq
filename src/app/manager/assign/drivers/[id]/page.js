@@ -171,7 +171,7 @@ const AssignDriver = ({ params }) => {
           </motion.button>
         </div>
       )}
-      {filteredDrivers.length!==0 && (<table className={`w-${isMapVisible? "1/2" : "full"} text-left border-collapse`}>
+      {filteredDrivers.length!==0 && (<table className={`w-${isMapVisible? "1/2" : "full"} text-left border-collapse h-fit`}>
           <thead>
             <tr className="bg-gray-200">
               <th
