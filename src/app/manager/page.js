@@ -18,8 +18,8 @@ export default function Home() {
     console.log("Submitting form...");
     e.preventDefault();
     if (!username || !password) {
-      console.log("Both fields are required.");
-      setErrorMessage("Both fields are required.");
+      console.log("All fields are required.");
+      setErrorMessage("All fields are required.");
       // setShake(true);
       // setTimeout(() => setShake(false), 500);
     } else {
