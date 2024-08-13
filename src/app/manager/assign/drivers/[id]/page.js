@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import MapSelector from "@/components/MapSelector";
 import { motion } from "framer-motion";
+import Header from "@/components/Header";
 const AssignDriver = ({ params }) => {
   const vehicleId = params.id;
   const [drivers, setDrivers] = useState([]);
@@ -117,7 +118,8 @@ const AssignDriver = ({ params }) => {
   };
 
   return (
-    <div className="text-white">
+    <div className="p-4 flex flex-col gap-4 items-center">
+      <Header content="Assign Drivers" />
       <div className="flex gap-4">
         <input
           type="datetime-local"
@@ -135,6 +137,7 @@ const AssignDriver = ({ params }) => {
           min={startTime}
         />
       </div>
+      {!startTime && !endTime && (<p className="m-auto uppercase text-[22px] md:text-[12px] mx-[13%] md:mx-[10%] text-[#B7AB98] mb-2 tracking-[7px]">Enter dates to see available drivers</p>)}
       {startTime && endTime && (
         <motion.button
           className={`text-grey text-xl rounded-full border-2 border-grey w-56 py-3  hover:bg-[#de4c2c] hover:border-4 hover:text-black hover:font-bold bg-[#0d0d0d] hover:border-[#de4c2c] self-center`}
@@ -145,18 +148,21 @@ const AssignDriver = ({ params }) => {
           {isMapVisible ? "Hide Map" : "Filter by Location"}
         </motion.button>
       )}
+      
+      <div className="relative overflow-x-auto shadow-md sm:rounded-lg self-start w-full flex gap-5 justify-evenly">
       {isMapVisible && (
-        <div>
-          <MapSelector onLocationSelect={setSelectedLocation} />
+        <div className="min-w-1/2 items-center p-2">
+          <MapSelector onLocationSelect={setSelectedLocation}/>
+          
           <input
             type="number"
             placeholder="Search Radius (km)"
             value={searchRadius}
             onChange={(e) => setSearchRadius(e.target.value)}
-            className="text-black"
+           className="text-black mb-4 p-2 border rounded self-start mt-4 mx-4"
           />
           <motion.button
-            className={`text-grey text-xl rounded-full border-2 border-grey w-56 py-3  hover:bg-[#de4c2c] hover:border-4 hover:text-black hover:font-bold bg-[#0d0d0d] hover:border-[#de4c2c] self-center`}
+            className={`text-grey text-xl rounded-full border-2 border-grey w-56 py-3  hover:bg-[#de4c2c] hover:border-4 hover:text-black hover:font-bold bg-[#0d0d0d] hover:border-[#de4c2c] self-center mt-4 mx-4`}
             whileTap={{ scale: 0.9 }}
             whileHover={{ scale: 1.1 }}
             onClick={handleFilterByLocation}
@@ -165,19 +171,61 @@ const AssignDriver = ({ params }) => {
           </motion.button>
         </div>
       )}
-      {startTime &&
-        endTime &&
-        filteredDrivers.map((driver) => (
-          <div key={driver.id} className="flex gap-3">
-            <input
-              type="checkbox"
-              checked={selectedDrivers.includes(driver.id)}
-              onChange={() => handleDriverSelection(driver.id)}
-            />
-            <p>{driver.name}</p>
-            <button onClick={() => handleRequest(driver.id)}>Request</button>
-          </div>
-        ))}
+      {filteredDrivers.length!==0 && (<table className={`w-${isMapVisible? "1/2" : "full"} text-left border-collapse`}>
+          <thead>
+            <tr className="bg-gray-200">
+              <th
+                scope="col"
+                className="p-3 font-bold uppercase text-gray-600 border-b"
+              >
+                Select
+              </th>
+              <th
+                scope="col"
+                className="p-3 font-bold uppercase text-gray-600 border-b"
+              >
+                Driver Name
+              </th>
+              <th
+                scope="col"
+                className="p-3 font-bold uppercase text-gray-600 border-b"
+              >
+                Request
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {startTime &&
+              endTime &&
+              filteredDrivers.map((driver) => (
+                <tr key={driver.id} className="bg-black hover:bg-orange">
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={selectedDrivers.includes(driver.id)}
+                      onChange={() => handleDriverSelection(driver.id)}
+                    />
+                  </th>
+                  <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {driver.name}
+                  </td>
+                  <td className="px-6 py-4">
+                    <motion.button
+                      className={`text-grey text-xl rounded-full border-2 border-grey w-fit p-3  hover:text-orange bg-[#0d0d0d] hover:border-[#de4c2c] self-center`}
+                      whileTap={{ scale: 0.9 }}
+                      onClick={() => handleRequest(driver.id)}
+                    >
+                      Request
+                    </motion.button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>)}
+      </div>
       {selectedDrivers.length > 0 && (
         <motion.button
           className={`text-grey text-xl rounded-full border-2 border-grey w-56 py-3  hover:bg-[#de4c2c] hover:border-4 hover:text-black hover:font-bold bg-[#0d0d0d] hover:border-[#de4c2c] self-center`}
@@ -188,7 +236,6 @@ const AssignDriver = ({ params }) => {
           Request Drivers
         </motion.button>
       )}
-      
     </div>
   );
 };
