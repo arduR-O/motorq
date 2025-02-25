@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation"; // Import the useRouter hook
+import { useRouter } from "next/navigation"; 
 import Image from "next/image";
 import { animate, motion } from "framer-motion";
 import Header from "@/components/Header";
@@ -9,8 +9,7 @@ export default function Home() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const router = useRouter(); // Initialize the router
-  // const [shake, setShake] = useState(false);
+  const router = useRouter();
 
   const handleUsernameChange = (e) => setUsername(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
@@ -21,12 +20,10 @@ export default function Home() {
     if (!username || !password) {
       console.log("All fields are required.");
       setErrorMessage("All fields are required.");
-      // setShake(true);
-      // setTimeout(() => setShake(false), 500);
+
     } else {
       setErrorMessage("");
-      // Perform any additional form submission logic here
-      router.push("/manager/home"); // Navigate to the desired page
+      router.push("/manager/home"); 
     }
   };
 
