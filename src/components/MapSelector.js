@@ -37,6 +37,10 @@ const MapSelector = ({ onLocationSelect }) => {
   const [position, setPosition] = useState(null);
   const [userLocation, setUserLocation] = useState([51.51, -0.09]); // Default location
   const [mapKey, setMapKey] = useState(0); // Key to force re-render of MapContainer
+  
+  // Change this value to a lower number for a more zoomed out view
+  // Zoom levels typically range from 0 (whole world) to 18 (very detailed)
+  const defaultZoomLevel = 8; // Changed from 13 to 8 for a more zoomed out view
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -70,7 +74,7 @@ const MapSelector = ({ onLocationSelect }) => {
       <MapContainer 
         key={mapKey}
         center={userLocation} 
-        zoom={13} 
+        zoom={defaultZoomLevel} // Using the variable here
         scrollWheelZoom={false}
         style={{ height: '100%', width: '100%' }}
       >
