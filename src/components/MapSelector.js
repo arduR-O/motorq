@@ -1,4 +1,4 @@
-// src/components/MapSelector.js
+
 "use client"
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
@@ -35,12 +35,10 @@ const LocationMarker = ({ setPosition }) => {
 
 const MapSelector = ({ onLocationSelect }) => {
   const [position, setPosition] = useState(null);
-  const [userLocation, setUserLocation] = useState([51.51, -0.09]); // Default location
-  const [mapKey, setMapKey] = useState(0); // Key to force re-render of MapContainer
+  const [userLocation, setUserLocation] = useState([51.51, -0.09]); 
+  const [mapKey, setMapKey] = useState(0); 
   
-  // Change this value to a lower number for a more zoomed out view
-  // Zoom levels typically range from 0 (whole world) to 18 (very detailed)
-  const defaultZoomLevel = 8; // Changed from 13 to 8 for a more zoomed out view
+    const defaultZoomLevel = 8; 
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -52,8 +50,8 @@ const MapSelector = ({ onLocationSelect }) => {
             lng: parseFloat(longitude.toFixed(2)),
           };
           setUserLocation([roundedCoords.lat, roundedCoords.lng]);
-          setPosition(roundedCoords); // Set initial position
-          setMapKey(prev => prev + 1); // Force MapContainer to re-render
+          setPosition(roundedCoords); 
+          setMapKey(prev => prev + 1); 
           console.log("User location:", roundedCoords.lat, roundedCoords.lng);
         },
         (error) => {
@@ -74,7 +72,7 @@ const MapSelector = ({ onLocationSelect }) => {
       <MapContainer 
         key={mapKey}
         center={userLocation} 
-        zoom={defaultZoomLevel} // Using the variable here
+        zoom={defaultZoomLevel} 
         scrollWheelZoom={false}
         style={{ height: '100%', width: '100%' }}
       >
