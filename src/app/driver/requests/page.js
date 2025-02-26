@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import Header from "@/components/Header";
 import { motion } from "framer-motion";
+// import BackButton from "@/components/BackButton";
 
 const RequestsContent = () => {
   const [requests, setRequests] = useState([]);
@@ -58,6 +59,7 @@ const RequestsContent = () => {
 
   return (
     <div className="p-4 flex flex-col gap-4 items-center">
+      {/* <BackButton /> */}
       <Header content="Manage Requests" />
       {requests.length === 0 && (
         <p className="m-auto uppercase text-[16px] md:text-[12px] mx-[13%] md:mx-[10%] text-[#B7AB98] mb-2 tracking-[7px]">

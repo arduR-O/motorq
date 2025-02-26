@@ -9,7 +9,7 @@ const Page = () => {
   return (
     <div className="min-h-screen min-w-screen flex flex-col justify-center items-center gap-10">
       <div className="w-[25vw] flex flex-col items-center">
-      <Header content={"Role"}/>
+      <Header content={"Role"} showBackButton={false}/>
       </div>
       <div className="flex flex-col h-[40vh] w-[25vw] justify-evenly border-8 border-grey rounded-3xl">
         <div className="flex flex-col m-auto gap-10 items-center">

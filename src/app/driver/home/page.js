@@ -10,7 +10,7 @@ const HomeContent = () => {
   
   return (
           <main className="min-h-screen min-w-screen flex flex-col justify-center items-center gap-2">
-              <Header content="Driver Home" />
+              <Header content="Driver Home" showBackButton={false}/>
               <div className="flex flex-col h-[55vh] w-[25vw] justify-evenly border-4 border-grey rounded-3xl items-center">
                   <Link href={`/driver/requests?driverId=${encodeURIComponent(driverId)}`}>
                       <OrgButton content="View Requests" />

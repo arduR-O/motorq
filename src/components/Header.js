@@ -1,6 +1,11 @@
-const Header = ({ content }) => {
+"use client";
+import BackButton from "@/components/BackButton";
+
+const Header = ({ content, showBackButton = true }) => {
   return (
-    <>
+    <div className="w-full flex flex-col items-center relative">
+      {showBackButton && <BackButton />}
+      
       <h1 className="text-6xl font-bold text-[#B7AB98] ">{content}</h1>
 
       <div className="w-1/3 flex items-center justify-center">
@@ -23,7 +28,7 @@ const Header = ({ content }) => {
         </div>
         <div className="flex-grow h-0.5 bg-gray-300 dark:bg-gray-700"></div>
       </div>
-    </>
+    </div>
   );
 };
 

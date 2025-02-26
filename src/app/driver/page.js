@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <main className="min-h-screen min-w-screen flex flex-col justify-center items-center gap-2">
       <div className="flex flex-col items-center gap-5">
-        <Header content={"Driver Login"} />
+        <Header content={"Driver Login"} showBackButton={false}/>
       </div>
       <div
         className={`flex items-center p-4 mb-4 text-sm text-orange rounded-lg bg-yellow-50 dark:bg-black dark:text-grey border-2 border-orange`}
