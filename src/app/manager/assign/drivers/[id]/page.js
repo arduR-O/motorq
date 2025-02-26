@@ -15,10 +15,11 @@ const AssignDriver = ({ params }) => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [searchRadius, setSearchRadius] = useState("");
   const [filteredDrivers, setFilteredDrivers] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const fetchUnassignedDrivers = async () => {
+    setIsLoading(true);
     try {
       const response = await fetch(
         `/api/get-drivers/unassigned?startTime=${startTime}&endTime=${endTime}`
@@ -26,6 +27,7 @@ const AssignDriver = ({ params }) => {
       const data = await response.json();
       setDrivers(data);
       setFilteredDrivers(data);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching unassigned drivers:", error);
     }
@@ -128,6 +130,7 @@ const AssignDriver = ({ params }) => {
           onChange={(e) => setStartTime(e.target.value)}
           placeholder="Start Time"
           className="text-black mb-4 p-2 border rounded self-start"
+          max={endTime}
         />
         <input
           type="datetime-local"
@@ -138,12 +141,12 @@ const AssignDriver = ({ params }) => {
           min={startTime}
         />
       </div>
-      {!startTime && !endTime && (
-        <p className="m-auto uppercase text-[22px] md:text-[12px] mx-[13%] md:mx-[10%] text-[#B7AB98] mb-2 tracking-[7px]">
+      {!isLoading && !startTime && !endTime && (
+          <p className="m-auto uppercase text-[22px] md:text-[12px] mx-[13%] md:mx-[10%] text-[#B7AB98] mb-2 tracking-[7px]">
           Enter dates to see available drivers
-        </p>
+          </p>
       )}
-      {startTime && endTime && (
+      {!isLoading && startTime && endTime && (
         <div className="w-56 h-[52px] flex items-center justify-center">
           <motion.button
             className={`text-grey text-xl rounded-full border-2 border-grey w-56 py-3 hover:bg-[#de4c2c] hover:border-4 hover:text-black hover:font-bold bg-[#0d0d0d] hover:border-[#de4c2c] m-auto`}
@@ -168,7 +171,7 @@ const AssignDriver = ({ params }) => {
               value={searchRadius}
               onChange={(e) => setSearchRadius(e.target.value)}
               className="text-black mb-4 p-2 border rounded self-start mt-4 mx-4"
-            />
+              />
             <div className="w-56 h-[52px] flex items-center justify-center">
               <motion.button
                 className={`text-grey text-xl rounded-full border-2 border-grey w-56 py-3 hover:bg-[#de4c2c] hover:border-4 hover:text-black hover:font-bold bg-[#0d0d0d] hover:border-[#de4c2c] m-auto`}
@@ -188,7 +191,7 @@ const AssignDriver = ({ params }) => {
           {filteredDrivers.length !== 0 && (
             <table
               className={`w-full text-left border-collapse h-fit`}
-            >
+              >
               <thead>
                 <tr className="bg-gray-200">
                   <th
@@ -224,7 +227,7 @@ const AssignDriver = ({ params }) => {
                           type="checkbox"
                           checked={selectedDrivers.includes(driver.id)}
                           onChange={() => handleDriverSelection(driver.id)}
-                        />
+                          />
                       </th>
                       <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {driver.name}
@@ -234,7 +237,7 @@ const AssignDriver = ({ params }) => {
                           className={`text-grey text-xl rounded-full border-2 border-grey w-fit p-3  hover:text-orange bg-[#0d0d0d] hover:border-[#de4c2c] self-center`}
                           whileTap={{ scale: 0.9 }}
                           onClick={() => handleRequest(driver.id)}
-                        >
+                          >
                           Request
                         </motion.button>
                       </td>
@@ -251,7 +254,7 @@ const AssignDriver = ({ params }) => {
                 whileHover={{ scale: 1.1 }}
                 onClick={handleMassRequest}
                 style={{ transformOrigin: 'center', transformStyle: 'preserve-3d' }}
-              >
+                >
                 Request Drivers
               </motion.button>
             </div>

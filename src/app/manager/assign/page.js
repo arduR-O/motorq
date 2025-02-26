@@ -8,7 +8,7 @@ const Page = () => {
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
     const [filteredVehicles, setFilteredVehicles] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         // Fetch all vehicles initially
@@ -24,6 +24,7 @@ const Page = () => {
         setIsLoading(false);
     };
 
+    // !TODO: Either make it so that it does filtering on the frontend itself or ask user for dates before fetching data, there is no point in making two calls to the backend 
     const handleFilter = async () => {
         if (startTime && endTime) {
             setIsLoading(true);
@@ -46,6 +47,7 @@ const Page = () => {
                 onChange={(e) => setStartTime(e.target.value)}
                 placeholder="Start Time"
                 className='text-black mb-4 p-2 border rounded self-start'
+                max={endTime}
                 />
             <input
                 type="datetime-local"
@@ -56,18 +58,26 @@ const Page = () => {
                 min={startTime}
                 />
                 </div>
-            <div className="w-56 h-[52px] flex items-center justify-center">
-                <motion.button
-                    className={`text-grey text-xl rounded-full border-2 border-grey w-56 py-3 hover:bg-[#de4c2c] hover:border-4 hover:text-black hover:font-bold bg-[#0d0d0d] hover:border-[#de4c2c] m-auto`}
-                    whileTap={{ scale: 0.9 }}
-                    whileHover={{ scale: 1.1 }}
-                    onClick={handleFilter}
-                    style={{ transformOrigin: 'center', transformStyle: 'preserve-3d' }}
-                >
-                    Filter
-                </motion.button>
-            </div>
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg self-start w-full">
+<div className="w-56 h-[52px] flex items-center justify-center">
+<motion.button
+              className={`text-grey text-xl rounded-full border-2 border-grey w-56 py-3 hover:bg-[#de4c2c] hover:border-4 hover:text-black hover:font-bold bg-[#0d0d0d] hover:border-[#de4c2c] m-auto`}
+              whileTap={{ scale: 0.9 }}
+              whileHover={{ scale: 1.1 }}
+              disabled={isLoading}
+              style={{ transformOrigin: 'center', transformStyle: 'preserve-3d' }}
+              onClick={handleFilter}
+            >
+              {isLoading ? (
+                <div className="flex items-center justify-center">
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                  Loading...
+                </div>
+              ) : (
+                "Filter"
+              )}
+            </motion.button>
+</div>
+            <div className="relative overflow-x-auto shadow-md sm:rounded-lg self-start w-full">{ !isLoading &&
                 <table className="w-full text-left border-collapse">
                     <thead>
                         <tr className="bg-gray-200">
@@ -108,6 +118,7 @@ const Page = () => {
                         ))}
                     </tbody>
                 </table>
+                }
             </div>
         </div>
     );
