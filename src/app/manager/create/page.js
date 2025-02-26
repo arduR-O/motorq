@@ -169,22 +169,25 @@ const Create = () => {
               </p>
             )}
           </div>
-          <motion.button
-            className={`text-grey text-xl rounded-full border-2 border-grey w-56 py-3 hover:bg-[#de4c2c] hover:border-4 hover:text-black hover:font-bold bg-[#0d0d0d] hover:border-[#de4c2c] m-auto`}
-            whileTap={{ scale: 0.9 }}
-            whileHover={{ scale: 1.1 }}
-            type="submit"
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <div className="flex items-center justify-center">
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                Loading...
-              </div>
-            ) : (
-              "Add Driver"
-            )}
-          </motion.button>
+          <div className="w-56 h-[52px] flex items-center justify-center"> {/* Fixed size container to prevent cls*/}
+            <motion.button
+              className={`text-grey text-xl rounded-full border-2 border-grey w-56 py-3 hover:bg-[#de4c2c] hover:border-4 hover:text-black hover:font-bold bg-[#0d0d0d] hover:border-[#de4c2c] m-auto`}
+              whileTap={{ scale: 0.9 }}
+              whileHover={{ scale: 1.1 }}
+              type="submit"
+              disabled={isLoading}
+              style={{ transformOrigin: 'center', transformStyle: 'preserve-3d' }}
+            >
+              {isLoading ? (
+                <div className="flex items-center justify-center">
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                  Loading...
+                </div>
+              ) : (
+                "Add Driver"
+              )}
+            </motion.button>
+          </div>
         </form>
       </div>
 

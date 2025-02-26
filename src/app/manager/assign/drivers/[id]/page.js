@@ -144,14 +144,17 @@ const AssignDriver = ({ params }) => {
         </p>
       )}
       {startTime && endTime && (
-        <motion.button
-          className={`text-grey text-xl rounded-full border-2 border-grey w-56 py-3  hover:bg-[#de4c2c] hover:border-4 hover:text-black hover:font-bold bg-[#0d0d0d] hover:border-[#de4c2c] self-center`}
-          whileTap={{ scale: 0.9 }}
-          whileHover={{ scale: 1.1 }}
-          onClick={() => setIsMapVisible(!isMapVisible)}
-        >
-          {isMapVisible ? "Hide Map" : "Filter by Location"}
-        </motion.button>
+        <div className="w-56 h-[52px] flex items-center justify-center">
+          <motion.button
+            className={`text-grey text-xl rounded-full border-2 border-grey w-56 py-3 hover:bg-[#de4c2c] hover:border-4 hover:text-black hover:font-bold bg-[#0d0d0d] hover:border-[#de4c2c] m-auto`}
+            whileTap={{ scale: 0.9 }}
+            whileHover={{ scale: 1.1 }}
+            onClick={() => setIsMapVisible(!isMapVisible)}
+            style={{ transformOrigin: 'center', transformStyle: 'preserve-3d' }}
+          >
+            {isMapVisible ? "Hide Map" : "Filter by Location"}
+          </motion.button>
+        </div>
       )}
 
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg self-start w-full flex gap-5 justify-evenly">
@@ -166,14 +169,17 @@ const AssignDriver = ({ params }) => {
               onChange={(e) => setSearchRadius(e.target.value)}
               className="text-black mb-4 p-2 border rounded self-start mt-4 mx-4"
             />
-            <motion.button
-              className={`text-grey text-xl rounded-full border-2 border-grey w-56 py-3  hover:bg-[#de4c2c] hover:border-4 hover:text-black hover:font-bold bg-[#0d0d0d] hover:border-[#de4c2c] self-center mt-4 mx-4`}
-              whileTap={{ scale: 0.9 }}
-              whileHover={{ scale: 1.1 }}
-              onClick={handleFilterByLocation}
-            >
-              Apply Filter
-            </motion.button>
+            <div className="w-56 h-[52px] flex items-center justify-center">
+              <motion.button
+                className={`text-grey text-xl rounded-full border-2 border-grey w-56 py-3 hover:bg-[#de4c2c] hover:border-4 hover:text-black hover:font-bold bg-[#0d0d0d] hover:border-[#de4c2c] m-auto`}
+                whileTap={{ scale: 0.9 }}
+                whileHover={{ scale: 1.1 }}
+                onClick={handleFilterByLocation}
+                style={{ transformOrigin: 'center', transformStyle: 'preserve-3d' }}
+              >
+                Apply Filter
+              </motion.button>
+            </div>
           </div>
         )}
         <div className={`flex flex-col gap-5 ${
@@ -238,13 +244,17 @@ const AssignDriver = ({ params }) => {
             </table>
           )}
           {selectedDrivers.length > 0 && (
-            <motion.button
-              className={`text-grey text-xl rounded-full border-2 border-grey w-56 py-3  hover:bg-[#de4c2c] hover:border-4 hover:text-black hover:font-bold bg-[#0d0d0d] hover:border-[#de4c2c] self-center`}
-              whileTap={{ scale: 0.9 }}
-              onClick={handleMassRequest}
-            >
-              Request Drivers
-            </motion.button>
+            <div className="w-56 h-[52px] flex items-center justify-center">
+              <motion.button
+                className={`text-grey text-xl rounded-full border-2 border-grey w-56 py-3 hover:bg-[#de4c2c] hover:border-4 hover:text-black hover:font-bold bg-[#0d0d0d] hover:border-[#de4c2c] m-auto`}
+                whileTap={{ scale: 0.9 }}
+                whileHover={{ scale: 1.1 }}
+                onClick={handleMassRequest}
+                style={{ transformOrigin: 'center', transformStyle: 'preserve-3d' }}
+              >
+                Request Drivers
+              </motion.button>
+            </div>
           )}
         </div>
       </div>
