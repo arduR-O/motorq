@@ -13,12 +13,16 @@ const Page = () => {
       </div>
       <div className="flex flex-col h-[40vh] w-[25vw] justify-evenly border-8 border-grey rounded-3xl">
         <div className="flex flex-col m-auto gap-10 items-center">
-          <Link href="/manager">
-            <OrgButton content={"Manager"} />
-          </Link>
-          <Link href="/driver">
-            <OrgButton content={"Driver"} />
-          </Link>
+          <div className="w-48 h-20 flex justify-center items-center">
+            <Link href="/manager">
+              <OrgButton content={"Manager"} />
+            </Link>
+          </div>
+          <div className="w-48 h-20 flex justify-center items-center">
+            <Link href="/driver">
+              <OrgButton content={"Driver"} />
+            </Link>
+          </div>
         </div>
       </div>
     </div>
