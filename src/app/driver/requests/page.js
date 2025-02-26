@@ -152,7 +152,7 @@ const RequestsContent = () => {
                     <div className="flex gap-4">
                       <div className="w-12 h-12 flex items-center justify-center"> {/* Fixed size container */}
                         <motion.button
-                          className={`text-grey text-xl rounded-full border-2 border-grey w-fit p-3 hover:bg-[#de4c2c] hover:border-4 hover:text-black hover:font-bold bg-[#0d0d0d] hover:border-[#de4c2c]`}
+                          className={`text-grey text-xl rounded-full border-2 border-grey w-fit p-3  hover:text-black hover:font-bold bg-[#0d0d0d] `}
                           whileTap={{ scale: 0.9 }}
                           whileHover={{ scale: 1.1 }}
                           onClick={() => handleRequestAction(request.id, "APPROVED")}
@@ -163,7 +163,7 @@ const RequestsContent = () => {
                       </div>
                       <div className="w-12 h-12 flex items-center justify-center"> {/* Fixed size container */}
                         <motion.button
-                          className={`text-grey text-xl rounded-full border-2 border-grey w-fit p-3 hover:bg-[#de4c2c] hover:border-4 hover:text-black hover:font-bold bg-[#0d0d0d] hover:border-[#de4c2c]`}
+                          className={`text-grey text-xl rounded-full border-2 border-grey w-fit p-3  hover:text-black hover:font-bold bg-[#0d0d0d] `}
                           whileTap={{ scale: 0.9 }}
                           whileHover={{ scale: 1.1 }}
                           onClick={() => handleRequestAction(request.id, "REJECTED")}
